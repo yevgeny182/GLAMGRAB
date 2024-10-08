@@ -1,6 +1,7 @@
 package com.example.shopphileappactual;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +20,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
@@ -120,6 +122,9 @@ public class UpdateProduct extends AppCompatActivity {
         });
 
 
+        delete.setOnClickListener(view -> confirmDeleteDialog());
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -187,7 +192,34 @@ public class UpdateProduct extends AppCompatActivity {
                         }
                     }
                 });
-    }
+          }
+
+      void confirmDeleteDialog(){
+          AlertDialog.Builder build = new AlertDialog.Builder(this);
+          build.setTitle("Delete Listing?");
+          build.setMessage("Are you sure you want to delete" + description + "? this cannot be undone");
+          build.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialogInterface, int i) {
+                  MyDataBaseHelper db = new MyDataBaseHelper(UpdateProduct.this);
+                  db.deleteData(id);
+                  Intent intent = new Intent(UpdateProduct.this, MainActivity.class);
+                  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                  startActivity(intent);
+                  finish();
+
+              }
+          });
+          build.setNegativeButton("No", new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialogInterface, int i) {
+                  Toast.makeText(UpdateProduct.this, "\uD83D\uDE45\u200D♂\uFE0F No changes made", Toast.LENGTH_SHORT).show();
+
+              }
+          });
+          AlertDialog alert = build.create();
+          alert.show();
+      }
 
 
 }
