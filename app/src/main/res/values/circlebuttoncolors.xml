@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BaseCircleButton">
+        <item name="android:background">@drawable/circle_shape</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+    <style name="CircleButton.Red" parent="BaseCircleButton">
+        <item name="android:backgroundTint">#AC2020</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="CircleButton.Green" parent="BaseCircleButton">
+        <item name="android:backgroundTint">#0F5339</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="CircleButton.Blue" parent="BaseCircleButton">
+        <item name="android:backgroundTint">#09ABCE</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="CircleButton.Gray" parent="BaseCircleButton">
+        <item name="android:backgroundTint">#A5AABD</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="CircleButton.Purple" parent="BaseCircleButton">
+        <item name="android:backgroundTint">#A175AC</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="CircleButton.Yellow" parent="BaseCircleButton">
+        <item name="android:backgroundTint">#FBBD05</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+</resources>
+
+
+

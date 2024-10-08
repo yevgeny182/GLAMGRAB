@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?attr/colorControlHighlight">
+
+    <!-- Circle background -->
+    <item>
+        <shape>
+            <solid android:color="#EB9A98" /> <!-- Color of the circle -->
+            <corners android:radius="100dp" /> <!-- High radius for a perfect circle -->
+        </shape>
+    </item>
+
+</ripple>
