@@ -8,8 +8,8 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="144dp"
+        android:layout_height="186dp"
         android:background="?attr/selectableItemBackground"
         android:orientation="vertical"
         tools:ignore="MissingConstraints"
@@ -45,8 +45,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="2dp">
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textViewDollarSign"
@@ -64,7 +64,6 @@
                 android:textColor="#FEC63A"
                 android:textSize="14sp" />
         </LinearLayout>
-
 
 
     </LinearLayout>

@@ -55,11 +55,11 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     public byte[] getBitmapByteArray(Bitmap bitmap){
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
         return outputStream.toByteArray();
     }
 
-    void createData(String title, String desc, String category, float price, byte[] image){
+    void createData(String title, String desc, String category, float price, String image){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues content = new ContentValues();
         content.put(PROD_TITLE, title);
