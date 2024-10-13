@@ -10,24 +10,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
 
     private Context context;
     private ArrayList prodID, prodName, prodDesc, prodPrice, prodCategory;
-    private ArrayList<byte[]> prodImg;
+    private ArrayList<String> prodImg;
     Activity activity;
     int position;
 
-    ProductAdapter(Activity activity, Context context, ArrayList prodID, ArrayList prodName, ArrayList prodDesc, ArrayList prodPrice, ArrayList prodCategory, ArrayList<byte[]> prodImg) {
+    ProductAdapter(Activity activity, Context context, ArrayList prodID, ArrayList prodName, ArrayList prodDesc, ArrayList prodPrice, ArrayList prodCategory, ArrayList<String> prodImg) {
         this.context = context;
         this.activity = activity;
         this.prodID = prodID;
@@ -35,7 +35,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         this.prodDesc = prodDesc;
         this.prodPrice = prodPrice;
         this.prodCategory = prodCategory;
-        this.prodImg = prodImg;
+        this.prodImg = prodImg; // Updated type
     }
 
     @NonNull
@@ -47,19 +47,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     }
 
     @Override
-
     public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         this.position = position;
 
         holder.name.setText(String.valueOf(prodName.get(position)));
         holder.desc.setText(String.valueOf(prodDesc.get(position)));
         holder.price.setText(String.valueOf(prodPrice.get(position)));
-        byte[] imgBytes = prodImg.get(position);
-        if (imgBytes != null && imgBytes.length > 0) {
-            Bitmap bmp = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
-            holder.img.setImageBitmap(bmp);
+
+        // Load image from file path
+        String imgPath = prodImg.get(position);
+        if (imgPath != null && !imgPath.isEmpty()) {
+            File imgFile = new File(imgPath);
+            if (imgFile.exists()) {
+                Bitmap bmp = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                holder.img.setImageBitmap(bmp);
+            } else {
+                holder.img.setImageResource(R.drawable.placeholder_image); // If the file doesn't exist, use a placeholder image
+            }
         } else {
-            holder.img.setImageResource(R.drawable.placeholder_image);
+            holder.img.setImageResource(R.drawable.placeholder_image); // If no image path, use a placeholder
         }
 
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
@@ -71,13 +77,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 intent.putExtra("description", String.valueOf(prodDesc.get(position)));
                 intent.putExtra("price", String.valueOf(prodPrice.get(position)));
                 intent.putExtra("category", String.valueOf(prodCategory.get(position)));
-                intent.putExtra("image", prodImg.get(position));
+                intent.putExtra("image", prodImg.get(position)); // Pass the image file path as a string
                 activity.startActivityForResult(intent, 1);
             }
         });
-
     }
-
 
     @Override
     public int getItemCount() {
@@ -86,9 +90,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView  name, desc, price, category;
+        TextView name, desc, price, category;
         ConstraintLayout mainLayout;
-        String prodId;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,6 +103,5 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
             mainLayout = itemView.findViewById(R.id.prodLayoutMain);
         }
-
     }
 }

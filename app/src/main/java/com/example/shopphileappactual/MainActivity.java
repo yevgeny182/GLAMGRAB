@@ -3,6 +3,7 @@ package com.example.shopphileappactual;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,7 +16,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ImageButton add;
     MyDataBaseHelper mainDB;
     ArrayList<String> prodID, prodName, prodDesc, prodPrice, prodCategory;
-    ArrayList<byte[]> prodImg;
+    ArrayList<String> prodImg;  // Changed to ArrayList<String> for image paths
     ProductAdapter prodAdapter;
 
     @SuppressLint("MissingInflatedId")
@@ -35,10 +35,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-
         recycler = findViewById(R.id.recyclerViewProducts);
         add = findViewById(R.id.addListing);
-
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         mainDB = new MyDataBaseHelper(MainActivity.this);
         prodID = new ArrayList<>();
         prodName = new ArrayList<>();
@@ -57,14 +54,12 @@ public class MainActivity extends AppCompatActivity {
         prodCategory = new ArrayList<>();
         prodImg = new ArrayList<>();
 
-
         displayDataFromDB();
 
         prodAdapter = new ProductAdapter(MainActivity.this, MainActivity.this, prodID, prodName, prodDesc, prodPrice, prodCategory, prodImg);
         recycler.setAdapter(prodAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 3);
         recycler.setLayoutManager(gridLayoutManager);
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -93,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 prodDesc.add(cursor.getString(2));
                 prodCategory.add(cursor.getString(3));
                 prodPrice.add(cursor.getString(4));
-                prodImg.add(cursor.getBlob(5));
+                prodImg.add(cursor.getString(5));  // Retrieving image path as String
             }
         }
     }
