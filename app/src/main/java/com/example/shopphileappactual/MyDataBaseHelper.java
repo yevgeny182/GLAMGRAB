@@ -41,8 +41,8 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                 PROD_TITLE + " TEXT, " +
                 PROD_DESC + " TEXT, " +
                 PROD_CATEGORY + " TEXT, " +
-                PROD_PRICE + " FLOAT, " +
-                PROD_IMAGE + " BLOB);";
+                PROD_PRICE + " TEXT, " +
+                PROD_IMAGE + " TEXT);";
         sqLiteDatabase.execSQL(query);
 
     }
@@ -59,7 +59,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         return outputStream.toByteArray();
     }
 
-    void createData(String title, String desc, String category, float price, String image){
+    void createData(String title, String desc, String category, String price, String image){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues content = new ContentValues();
         content.put(PROD_TITLE, title);
@@ -86,7 +86,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
-    void updateData(String rowID, String title, String desc, String category, float price, byte[] image) {
+    void updateData(String rowID, String title, String desc, String category, String price, String image) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(PROD_TITLE, title);

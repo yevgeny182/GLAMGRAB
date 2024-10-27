@@ -24,7 +24,7 @@ public class ProductPreview extends AppCompatActivity {
     ImageButton back;
     TextView prodTitle, prodPrice, prodDesc, prodCategory;
     ImageView prodImage;
-    String id, title, price, description, category;
+    String id, title, price, description, category, image;
     TextView edit;
 
 
@@ -55,7 +55,7 @@ public class ProductPreview extends AppCompatActivity {
             intent.putExtra("description", description);
             intent.putExtra("price", price);
             intent.putExtra("category", category);
-            intent.putExtra("image", getIntent().getByteArrayExtra("image"));
+            intent.putExtra("image", image);
             startActivityForResult(intent, 1);
         });
 
@@ -78,7 +78,8 @@ public class ProductPreview extends AppCompatActivity {
             description = data.getStringExtra("description");
             price = data.getStringExtra("price");
             category = data.getStringExtra("category");
-            byte[] updatedImage = data.getByteArrayExtra("image");
+            image = data.getStringExtra("image");
+
 
 
             prodTitle.setText(title);
@@ -86,8 +87,8 @@ public class ProductPreview extends AppCompatActivity {
             prodPrice.setText(price);
             prodCategory.setText(category);
 
-            if (updatedImage != null && updatedImage.length > 0) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(updatedImage, 0, updatedImage.length);
+            if (image != null && !image.isEmpty()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(image);
                 prodImage.setImageBitmap(bitmap);
             } else {
                 prodImage.setImageResource(R.drawable.placeholder_image);
@@ -103,15 +104,15 @@ public class ProductPreview extends AppCompatActivity {
             description = getIntent().getStringExtra("description");
             price = getIntent().getStringExtra("price");
             category = getIntent().getStringExtra("category");
+            image = getIntent().getStringExtra("image");
 
             prodTitle.setText(title);
             prodPrice.setText(price);
             prodDesc.setText(description);
             prodCategory.setText(category);
 
-            byte[] imageByte = getIntent().getByteArrayExtra("image");
-            if (imageByte != null && imageByte.length > 0) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
+            if (image != null && !image.isEmpty()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(image);
                 prodImage.setImageBitmap(bitmap);
             } else {
                 prodImage.setImageResource(R.drawable.placeholder_image);

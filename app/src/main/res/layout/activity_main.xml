@@ -324,7 +324,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="12dp"
+                android:padding="16dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="160dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -360,7 +360,7 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/kids_button"
-                    android:layout_width="94dp"
+                    android:layout_width="70dp"
                     android:layout_height="41dp"
                     android:layout_marginStart="16dp"
                     android:background="@drawable/button_background"
