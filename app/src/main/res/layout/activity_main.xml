@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -19,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/AccountsMePage2Txt"
             android:layout_width="55dp"
             android:layout_height="18dp"
             android:layout_marginStart="320dp"
@@ -49,7 +50,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/homeMainTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
@@ -59,7 +60,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/homeMainButton"
             android:layout_width="38dp"
             android:layout_height="36dp"
             android:layout_marginStart="36dp"
@@ -82,20 +83,19 @@
      />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/heart"
             android:layout_width="54dp"
             android:layout_height="40dp"
             android:layout_marginStart="228dp"
             android:layout_marginTop="4dp"
             android:background="?attr/selectableItemBackground"
             android:src="@drawable/baseline_favorite_border_24"
-            android:text="Discover"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
              />
 
         <ImageButton
-            android:id="@+id/imageButton5"
+            android:id="@+id/AccountsMePage"
             android:layout_width="54dp"
             android:layout_height="40dp"
             android:layout_marginStart="320dp"
@@ -225,7 +225,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -310,53 +309,66 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/all_categories"
-        android:layout_width="125dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="160dp"
-        android:background="@drawable/button_background"
-        android:text="All Categories"
-        android:textAllCaps="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/men_button"
-        android:layout_width="70dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="160dp"
-        android:background="@drawable/button_background"
-        android:text="Men"
-        android:textAllCaps="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
+            android:fillViewport="true"
+            tools:ignore="MissingConstraints">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/women_button"
-        android:layout_width="94dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="256dp"
-        android:layout_marginTop="160dp"
-        android:background="@drawable/button_background"
-        android:text="Women"
-        android:textAllCaps="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="160dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/kids_button"
-        android:layout_width="94dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="360dp"
-        android:layout_marginTop="160dp"
-        android:background="@drawable/button_background"
-        android:text="Kids"
-        android:textAllCaps="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/all_categories"
+                    android:layout_width="125dp"
+                    android:layout_height="41dp"
+                    android:layout_marginStart="28dp"
+                    android:background="@drawable/button_background"
+                    android:text="All Categories"
+                    android:textAllCaps="false" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/men_button"
+                    android:layout_width="70dp"
+                    android:layout_height="41dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/button_background"
+                    android:text="Men"
+                    android:textAllCaps="false" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/women_button"
+                    android:layout_width="94dp"
+                    android:layout_height="41dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/button_background"
+                    android:text="Women"
+                    android:textAllCaps="false" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/kids_button"
+                    android:layout_width="94dp"
+                    android:layout_height="41dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/button_background"
+                    android:text="Kids"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

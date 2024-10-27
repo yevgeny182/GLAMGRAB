@@ -3,10 +3,13 @@ package com.example.shopphileappactual;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -22,7 +25,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recycler;
-    ImageButton add;
+    ImageButton add, account, heart, home;
+    TextView Account, Home;
     MyDataBaseHelper mainDB;
     ArrayList<String> prodID, prodName, prodDesc, prodPrice, prodCategory;
     ArrayList<String> prodImg;  // Changed to ArrayList<String> for image paths
@@ -37,6 +41,31 @@ public class MainActivity extends AppCompatActivity {
 
         recycler = findViewById(R.id.recyclerViewProducts);
         add = findViewById(R.id.addListing);
+
+
+        //image button footer
+        account = findViewById(R.id.AccountsMePage);
+        home = findViewById(R.id.homeMainButton);
+
+
+        //textview button clickable
+        Account = findViewById(R.id.AccountsMePage2Txt);
+        Home = findViewById(R.id.homeMainTxt);
+
+        //color for footer buttons
+        int color = Color.parseColor("#FEC63A");
+        home.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        Home.setTextColor(Color.parseColor("#FEC63A"));
+
+        //account image button intent to AccountPage.java
+        account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toAccountPage = new Intent(MainActivity.this, AccountPage.class);
+                startActivity(toAccountPage);
+            }
+        });
+
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
