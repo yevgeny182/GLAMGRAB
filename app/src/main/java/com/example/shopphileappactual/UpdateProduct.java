@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -27,7 +28,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class UpdateProduct extends AppCompatActivity {
     ImageButton back;
@@ -36,8 +42,10 @@ public class UpdateProduct extends AppCompatActivity {
     String id, title, price, description, category;
     AppCompatButton saveButton, imageSubmitButton;
     TextView delete;
-    byte[] imageByte;
     ActivityResultLauncher<Intent> resLauncher;
+    String image = null;
+
+
 
 
     @SuppressLint("MissingInflatedId")
@@ -61,6 +69,8 @@ public class UpdateProduct extends AppCompatActivity {
 
         back.setOnClickListener(view -> finish());
 
+
+
         registerResult();
         imageSubmitButton.setOnClickListener(view -> pickImage());
 
@@ -71,59 +81,57 @@ public class UpdateProduct extends AppCompatActivity {
                 String curTitle = prodTitle.getText().toString();
                 String curDesc = prodDesc.getText().toString();
                 String curCategory = prodCategory.getText().toString();
-                float curPrice = Float.parseFloat(prodPrice.getText().toString());
+                String curPrice = prodPrice.getText().toString();
+
+                // Get the current image URI as a string
+                String curImageUriString = image; // This is set in pickImage()
+
+                // Check if any changes were made
+                boolean isTitleChanged = !curTitle.equals(title);
+                boolean isDescChanged = !curDesc.equals(description);
+                boolean isCategoryChanged = !curCategory.equals(category);
+                boolean isPriceChanged = !curPrice.equals(price);
 
 
-                prodImage.setDrawingCacheEnabled(true);
-                prodImage.buildDrawingCache();
-                Bitmap curBitmap = prodImage.getDrawingCache();
-                byte[] curImageByte = convertBitmapToByteArray(curBitmap);
+                boolean isImageChanged = (image != null && !image.isEmpty());
 
-                boolean isImageChanged = !java.util.Arrays.equals(imageByte, curImageByte);
 
-                if (curTitle.equals(title) && curDesc.equals(description) &&
-                        curCategory.equals(category) && curPrice == Float.parseFloat(price) || !isImageChanged) {
+                // Debug logs
+                Log.d("UpdateProduct", "isTitleChanged: " + isTitleChanged);
+                Log.d("UpdateProduct", "isDescChanged: " + isDescChanged);
+                Log.d("UpdateProduct", "isCategoryChanged: " + isCategoryChanged);
+                Log.d("UpdateProduct", "isPriceChanged: " + isPriceChanged);
+                Log.d("UpdateProduct", "isImageChanged: " + isImageChanged);
+                Log.d("UpdateProduct", "Current Image URI: " + curImageUriString);
+                Log.d("UpdateProduct", "Stored Image URI: " + image);
+
+                if (!isTitleChanged && !isDescChanged && !isCategoryChanged && !isPriceChanged && !isImageChanged) {
                     Toast.makeText(UpdateProduct.this, "No changes detected.", Toast.LENGTH_SHORT).show();
                 } else {
                     MyDataBaseHelper myDB = new MyDataBaseHelper(UpdateProduct.this);
-                    if(isImageChanged){
-                        myDB.updateData(id, curTitle, curDesc, curCategory, curPrice, curImageByte);
-                        Toast.makeText(UpdateProduct.this, "Product updated successfully.", Toast.LENGTH_SHORT).show();
+                    // Use the new image if it has changed, else keep the old one
+                    String finalImageUri = isImageChanged ? curImageUriString : image;
 
-                        /*
-                        Intent intent = new Intent(UpdateProduct.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
-                         */
-                    } else {
-                        myDB.updateData(id, curTitle, curDesc, curCategory, curPrice, imageByte);
-                        Toast.makeText(UpdateProduct.this, "Product and image updated successfully.", Toast.LENGTH_SHORT).show();
+                    // Log the final image URI being used for the update
+                    Log.d("UpdateProduct", "Final Image URI to save: " + finalImageUri);
 
-                        /*
-                        Intent intent = new Intent(UpdateProduct.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
-                        */
-                    }
+                    myDB.updateData(id, curTitle, curDesc, curCategory, curPrice, finalImageUri);
+                    Toast.makeText(UpdateProduct.this, "Product updated successfully.", Toast.LENGTH_SHORT).show();
+
+                    Intent resIntent = new Intent();
+                    resIntent.putExtra("id", id);
+                    resIntent.putExtra("title", curTitle);
+                    resIntent.putExtra("description", curDesc);
+                    resIntent.putExtra("price", String.valueOf(curPrice));
+                    resIntent.putExtra("category", curCategory);
+                    resIntent.putExtra("image", finalImageUri); // Pass the image URI string
+                    setResult(RESULT_OK, resIntent);
+                    finish();
                 }
-
-                Intent resIntent = new Intent();
-                resIntent.putExtra("id", id);
-                resIntent.putExtra("title", curTitle);
-                resIntent.putExtra("description", curDesc);
-                resIntent.putExtra("price", String.valueOf(curPrice));
-                resIntent.putExtra("category", curCategory);
-                resIntent.putExtra("image", isImageChanged ? curImageByte : imageByte);
-                setResult(RESULT_OK, resIntent);
-                finish();
             }
         });
 
-
         delete.setOnClickListener(view -> confirmDeleteDialog());
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -141,21 +149,20 @@ public class UpdateProduct extends AppCompatActivity {
     void getData() {
         if (getIntent().hasExtra("id") && getIntent().hasExtra("title") && getIntent().hasExtra("description")
                 && getIntent().hasExtra("price") && getIntent().hasExtra("category") && getIntent().hasExtra("image")) {
-
             id = getIntent().getStringExtra("id");
             title = getIntent().getStringExtra("title");
             description = getIntent().getStringExtra("description");
             price = getIntent().getStringExtra("price");
             category = getIntent().getStringExtra("category");
+            image = getIntent().getStringExtra("image");
 
             prodTitle.setText(title);
             prodPrice.setText(price);
             prodDesc.setText(description);
             prodCategory.setText(category);
 
-            byte[] imageByte = getIntent().getByteArrayExtra("image");
-            if (imageByte != null && imageByte.length > 0) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
+            if (image != null && !image.isEmpty()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(image);
                 prodImage.setImageBitmap(bitmap);
             } else {
                 prodImage.setImageResource(R.drawable.placeholder_image);
@@ -178,12 +185,21 @@ public class UpdateProduct extends AppCompatActivity {
                         if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                             Uri imageUri = result.getData().getData();
                             prodImage.setImageURI(imageUri);
-                            try{
-                                Bitmap bm = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                                ByteArrayOutputStream imgStream = new ByteArrayOutputStream();
-                                bm.compress(Bitmap.CompressFormat.PNG, 100, imgStream);
-                                imageByte = imgStream.toByteArray();
-                            }catch (Exception e){
+                            try {
+                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                                // Save the image and get the file path
+                                image = saveImageToFile(bitmap);
+                                Log.d("UpdateProduct", "New Image URI: " + image); // Log the new image path
+
+                                // Load the image back from file path
+                                Bitmap loadedBitmap = BitmapFactory.decodeFile(image);
+                                if (loadedBitmap != null) {
+                                    prodImage.setImageBitmap(loadedBitmap);
+                                    Toast.makeText(UpdateProduct.this, "Image Selected Successfully", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(UpdateProduct.this, "Failed to load image from file", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
                                 e.printStackTrace();
                                 Toast.makeText(UpdateProduct.this, "Failed to load image", Toast.LENGTH_SHORT).show();
                             }
@@ -192,9 +208,10 @@ public class UpdateProduct extends AppCompatActivity {
                         }
                     }
                 });
-          }
+    }
 
-      void confirmDeleteDialog(){
+
+    void confirmDeleteDialog(){
           AlertDialog.Builder build = new AlertDialog.Builder(this);
           build.setTitle("Delete Listing?");
           build.setMessage("Are you sure you want to delete" + description + "? this cannot be undone");
@@ -213,13 +230,24 @@ public class UpdateProduct extends AppCompatActivity {
           build.setNegativeButton("No", new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialogInterface, int i) {
-                  Toast.makeText(UpdateProduct.this, "\uD83D\uDE45\u200D♂\uFE0F No changes made", Toast.LENGTH_SHORT).show();
-
+                  //Toast.makeText(UpdateProduct.this, "\uD83D\uDE45\u200D♂\uFE0F No changes made", Toast.LENGTH_SHORT).show();
               }
           });
           AlertDialog alert = build.create();
           alert.show();
       }
+
+    private String saveImageToFile(Bitmap bitmap) {
+        File imageFile = new File(getExternalFilesDir(null), "product_image_" + System.currentTimeMillis() + ".png");
+        try (FileOutputStream fos = new FileOutputStream(imageFile)) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            return imageFile.getAbsolutePath();  // Return the file path
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+    }
 
 
 }

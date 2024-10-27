@@ -71,7 +71,7 @@ public class AddProduct extends AppCompatActivity {
                             prodName.getText().toString().trim(),
                             prodDesc.getText().toString().trim(),
                             prodCategory.getText().toString().trim(),
-                            Float.valueOf(prodPrice.getText().toString().trim()),
+                            prodPrice.getText().toString().trim(),
                             imagePath
                     );
                     Toast.makeText(AddProduct.this, "Product Details Added Successfully", Toast.LENGTH_SHORT).show();
@@ -106,8 +106,10 @@ public class AddProduct extends AppCompatActivity {
                                 imagePath = saveImageToFile(bitmap);
                                 // Load the image back from file path
                                 Bitmap loadedBitmap = BitmapFactory.decodeFile(imagePath);
+
                                 if (loadedBitmap != null) {
                                     productImage.setImageBitmap(loadedBitmap);
+                                    Toast.makeText(AddProduct.this, "Image Selected Successfully", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(AddProduct.this, "Failed to load image from file", Toast.LENGTH_SHORT).show();
                                 }
