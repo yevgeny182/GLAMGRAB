@@ -520,7 +520,7 @@
             <View
                 android:id="@+id/divider1"
                 android:layout_width="350dp"
-                android:layout_height="0.5dp"
+                android:layout_height="0.7dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="133dp"
                 android:background="#928B7D"

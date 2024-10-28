@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class AccountPage extends AppCompatActivity {
     private ImageButton account, home;
     private TextView accountTxt, homeTxt, userNameTxt;
     boolean LoggedIn = false;
+    Button login;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -36,17 +38,31 @@ public class AccountPage extends AppCompatActivity {
 
         userNameTxt = findViewById(R.id.firstAndLastName);
 
+        //btn login
+        login = findViewById(R.id.loginButton);
+
+
         if(!LoggedIn){
             userNameTxt.setVisibility(View.GONE);
         }else{
             userNameTxt.setVisibility(View.VISIBLE);
         }
 
+
+
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent backToMainHomePage = new Intent( AccountPage.this,  MainActivity.class);
                 startActivity(backToMainHomePage);
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toLoginScreen = new Intent(AccountPage.this, LoginPage.class);
+                startActivity(toLoginScreen);
             }
         });
 
