@@ -46,8 +46,6 @@ public class UpdateProduct extends AppCompatActivity {
     String image = null;
 
 
-
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

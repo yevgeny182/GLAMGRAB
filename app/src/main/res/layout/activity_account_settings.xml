@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Header outside the ScrollView -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="36dp"
+            android:text="Account Settings"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/imageBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_arrow_back_24" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F9F9F9"
+            tools:context=".AccountSettings">
+
+            <!-- Your content goes here -->
+
+            <TextView
+                android:id="@+id/supportTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="464dp"
+                android:text="Support"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="419dp"
+                android:layout_height="252dp"
+                android:layout_marginTop="492dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <TextView
+                    android:id="@+id/RequestAccountDeletionText"
+                    android:layout_width="199dp"
+                    android:layout_height="26dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="204dp"
+                    android:text="Request Account Deletion"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/aboutButton2"
+                    android:layout_width="25dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="364dp"
+                    android:layout_marginTop="200dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chevron_right_24" />
+
+                <View
+                    android:id="@+id/divider999"
+                    android:layout_width="350dp"
+                    android:layout_height="0.8dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="144dp"
+                    android:background="#928B7D"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/aboutButton"
+                    android:layout_width="25dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="364dp"
+                    android:layout_marginTop="156dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chevron_right_24" />
+
+                <TextView
+                    android:id="@+id/aboutText"
+                    android:layout_width="147dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="160dp"
+                    android:text="About"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider6"
+                    android:layout_width="350dp"
+                    android:layout_height="0.8dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="192dp"
+                    android:background="#928B7D"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/glamgrabPoliciesButton"
+                    android:layout_width="25dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="364dp"
+                    android:layout_marginTop="108dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chevron_right_24" />
+
+                <ImageButton
+                    android:id="@+id/communityRulesButton"
+                    android:layout_width="25dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="364dp"
+                    android:layout_marginTop="64dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chevron_right_24" />
+
+                <View
+                    android:id="@+id/divider2Again"
+                    android:layout_width="350dp"
+                    android:layout_height="0.8dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="100dp"
+                    android:background="#928B7D"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="DuplicateIds" />
+
+                <ImageButton
+                    android:id="@+id/helpCentreButton"
+                    android:layout_width="25dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="364dp"
+                    android:layout_marginTop="20dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chevron_right_24" />
+
+                <TextView
+                    android:id="@+id/helpCentreTxt"
+                    android:layout_width="147dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Help Centre"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/notif"
+                    android:layout_width="147dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="64dp"
+                    android:text="Community Rules"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/dividerInSupport"
+                    android:layout_width="350dp"
+                    android:layout_height="0.8dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="56dp"
+                    android:background="#928B7D"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="DuplicateIds" />
+
+                <TextView
+                    android:id="@+id/glamgGrabText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="112dp"
+                    android:text="GLAMGRAB Policies"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="DuplicateIds" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="413dp"
+                android:layout_height="242dp"
+                android:layout_marginTop="208dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <View
+                    android:id="@+id/divider69"
+                    android:layout_width="350dp"
+                    android:layout_height="0.8dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="144dp"
+                    android:background="#928B7D"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="DuplicateIds" />
+
+                <ImageButton
+                    android:id="@+id/blockedUsersButton"
+                    android:layout_width="25dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="364dp"
+                    android:layout_marginTop="156dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chevron_right_24" />
+
+                <TextView
+                    android:id="@+id/blockedUsersTxT"
+                    android:layout_width="147dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="156dp"
+                    android:text="Blocked Users"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="DuplicateIds" />
+
+                <View
+                    android:id="@+id/divider0001"
+                    android:layout_width="350dp"
+                    android:layout_height="0.8dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="192dp"
+                    android:background="#928B7D"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="DuplicateIds" />
+
+                <ImageButton
+                    android:id="@+id/privacySettingsButton"
+                    android:layout_width="25dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="364dp"
+                    android:layout_marginTop="108dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chevron_right_24" />
+
+                <ImageButton
+                    android:id="@+id/notificationSettingsButton"
+                    android:layout_width="25dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="364dp"
+                    android:layout_marginTop="64dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chevron_right_24" />
+
+                <View
+                    android:id="@+id/divider20"
+                    android:layout_width="350dp"
+                    android:layout_height="0.8dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="100dp"
+                    android:background="#928B7D"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/chatSettingsButton"
+                    android:layout_width="25dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="364dp"
+                    android:layout_marginTop="20dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chevron_right_24" />
+
+                <TextView
+                    android:id="@+id/chatSettings"
+                    android:layout_width="147dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Chat Settings"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/notifTxt"
+                    android:layout_width="147dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="64dp"
+                    android:text="Notification Settings"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider123"
+                    android:layout_width="350dp"
+                    android:layout_height="0.8dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="56dp"
+                    android:background="#928B7D"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView35"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="112dp"
+                    android:text="Privacy Settings"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/settingsTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="180dp"
+                android:text="Settings"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="411dp"
+                android:layout_height="149dp"
+                android:layout_marginTop="24dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <ImageButton
+                    android:id="@+id/bankAccountsCardsButton"
+                    android:layout_width="25dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="364dp"
+                    android:layout_marginTop="108dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chevron_right_24" />
+
+                <ImageButton
+                    android:id="@+id/addressesButton"
+                    android:layout_width="25dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="364dp"
+                    android:layout_marginTop="64dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chevron_right_24" />
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="350dp"
+                    android:layout_height="0.8dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="100dp"
+                    android:background="#928B7D"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/accountAndSecurity"
+                    android:layout_width="25dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="364dp"
+                    android:layout_marginTop="20dp"
+                    android:background="?attr/selectableItemBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chevron_right_24" />
+
+                <TextView
+                    android:id="@+id/accountSec"
+                    android:layout_width="147dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Account &amp; Security"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/addressestab"
+                    android:layout_width="147dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="64dp"
+                    android:text="My Addresses"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="350dp"
+                    android:layout_height="0.8dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="56dp"
+                    android:background="#928B7D"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/bankAccountsCardsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bank Accounts / Cards"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="108dp" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Account"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="0dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/LogoutButton"
+                android:layout_width="349dp"
+                android:layout_height="51dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="780dp"
+                android:background="@drawable/logout_css"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:text="Logout"
+                android:textColor="#666666"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView38"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="148dp"
+                android:layout_marginTop="872dp"
+                android:text="GLAMGRAB v1.0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Add more views here as needed -->
+
+    </ScrollView>
+
+
+
+</LinearLayout>

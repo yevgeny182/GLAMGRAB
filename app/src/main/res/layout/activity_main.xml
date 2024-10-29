@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:scrollbars="none"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -112,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="164dp"
                 android:fillViewport="true"
+                android:scrollbars="none"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 

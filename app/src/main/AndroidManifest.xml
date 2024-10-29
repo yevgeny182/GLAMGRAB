@@ -13,7 +13,13 @@
         android:theme="@style/Theme.ShopphileAppActual"
         tools:targetApi="31">
         <activity
-            android:name=".SignUpPage"
+            android:name=".AccountSettings"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterPageSeller"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterPage"
             android:exported="false" />
         <activity
             android:name=".LikesPage"
@@ -33,7 +39,8 @@
         <activity
             android:name=".AddProduct"
             android:exported="false" />
-        <activity android:name=".LoginPage"
+        <activity
+            android:name=".LoginPage"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

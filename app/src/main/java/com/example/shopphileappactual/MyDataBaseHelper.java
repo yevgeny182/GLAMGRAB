@@ -11,15 +11,14 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     private Context context;
-    private static final String DATABASE_NAME = "ShopphileDB.db";
+    private static final String DATABASE_NAME = "GlamGrab.db";
     private static final int DATABASE_VERSION = 1;
-    private static final String TABLE_NAME = "ShopphileDataLibrary";
+    private static final String TABLE_NAME = "GlamGrabDataLibrary";
     private static final String PROD_ID = "_id";
     private static final String PROD_TITLE = "prod_title";
     private static final String PROD_DESC = "prod_desc";
