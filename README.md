@@ -17,5 +17,4 @@ GLAMGRAB is an e-commerce mobile application designed for Android devices. It pr
 ## Installation
 
 1. Clone the repository:
-   ```bash
-   fork me then clone it in your android studio
+fork this repo and run on your IDE
