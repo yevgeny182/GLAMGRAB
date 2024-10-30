@@ -2,6 +2,7 @@ package com.example.shopphileappactual;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+
 public class ProductPreview extends AppCompatActivity {
 
     ImageButton back;
@@ -26,6 +29,8 @@ public class ProductPreview extends AppCompatActivity {
     ImageView prodImage;
     String id, title, price, description, category, image;
     TextView edit;
+
+    GlamGrabAuthentication authDB;
 
 
 
@@ -67,6 +72,10 @@ public class ProductPreview extends AppCompatActivity {
 
 
         getData();
+
+
+        authDB = new GlamGrabAuthentication(ProductPreview.this);
+        authDataFromDB();
     }
 
     @Override
@@ -121,4 +130,25 @@ public class ProductPreview extends AppCompatActivity {
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }
     }
+
+    void authDataFromDB(){
+        Cursor cursor = authDB.fetchDataFromDB();
+        if(cursor != null && cursor.getCount() > 0){
+            while(cursor.moveToNext()){
+                String usernameValue = cursor.getString(1);
+                String userType = cursor.getString(3);
+                if(authDB.isLoggedIn(usernameValue) && userType.equals("seller")){
+                    edit.setVisibility(View.VISIBLE);
+                }else{
+                    edit.setVisibility(View.GONE);
+                }
+            }
+        }else{
+            Toast.makeText(this, "Auth Error", Toast.LENGTH_SHORT).show();
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+    }
+
 }

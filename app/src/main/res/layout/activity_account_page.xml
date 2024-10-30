@@ -385,7 +385,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="112dp"
                 android:layout_marginTop="64dp"
-                android:text="USER NAME"
+                android:text=""
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -396,7 +396,7 @@
                 android:layout_height="18dp"
                 android:layout_marginStart="112dp"
                 android:layout_marginTop="85dp"
-                android:text="USER TYPE GOES HERE"
+                android:text=""
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -124,35 +125,38 @@ public class AccountPage extends AppCompatActivity {
                 username.add(usernameValue);
                 user_type.add(userType);
                 shop_name.add(shopName);
-                 // Store as String for consistency with other lists
 
                 // Set LoggedIn status
-                if (authDB.isLoggedIn(usernameValue)  && userType.equals("customer")) {
+                if(authDB.isLoggedIn(usernameValue)){
+                    switch(userType){
+                        case "customer":
+                            Log.d("CustomerLogin", "Customer " + usernameValue + " is logged in");
+                            login.setVisibility(View.GONE);
+                            signup.setVisibility(View.GONE);
 
-                    login.setVisibility(View.GONE);
-                    signup.setVisibility(View.GONE);
+                            userNameTxt.setVisibility(View.VISIBLE);
+                            userNameTxt.setText(usernameValue);
 
-                    userNameTxt.setVisibility(View.VISIBLE);
-                    userNameTxt.setText(usernameValue);
+                            userTypeTxt.setVisibility(View.VISIBLE);
+                            userTypeTxt.setText("Customer");
+                            break;
 
-                    userTypeTxt.setVisibility(View.VISIBLE);
-                    userTypeTxt.setText("Customer");
-                }else if(authDB.isLoggedIn(usernameValue) && userType.equals("seller")){
-                    login.setVisibility(View.GONE);
-                    signup.setVisibility(View.GONE);
+                        case "seller":
+                            Log.d("CustomerLogin", "Seller " + usernameValue + " is logged in");
+                            login.setVisibility(View.GONE);
+                            signup.setVisibility(View.GONE);
 
-                    userNameTxt.setVisibility(View.VISIBLE);
-                    userNameTxt.setText(shopName);
+                            userNameTxt.setVisibility(View.VISIBLE);
+                            userNameTxt.setText(shopName);
 
-                    userTypeTxt.setVisibility(View.VISIBLE);
-                    userTypeTxt.setText("Seller");
-                }else{
+                            userTypeTxt.setVisibility(View.VISIBLE);
+                            userTypeTxt.setText("Seller");
+                            break;
+                        default:
+                            Toast.makeText(this, "usertype switch in default condition", Toast.LENGTH_SHORT).show();
+                            break;
 
-                    login.setVisibility(View.VISIBLE);
-                    signup.setVisibility(View.VISIBLE);
-
-                    userTypeTxt.setVisibility(View.GONE);
-                    userNameTxt.setVisibility(View.GONE);
+                    }
                 }
 
             }
