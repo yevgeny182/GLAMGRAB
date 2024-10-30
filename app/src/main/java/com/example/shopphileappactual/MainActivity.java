@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> prodID, prodName, prodDesc, prodPrice, prodCategory;
     ArrayList<String> prodImg;  // Changed to ArrayList<String> for image paths
     ProductAdapter prodAdapter;
+    GlamGrabAuthentication authDB;
+    ArrayList<String> userID, username, user_type, shop_name, isLoggedin;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -90,6 +92,16 @@ public class MainActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 3);
         recycler.setLayoutManager(gridLayoutManager);
 
+        //userID, username, user_type, shop_name, isLoggedin
+        authDB = new GlamGrabAuthentication(MainActivity.this);
+        userID = new ArrayList<>();
+        username = new ArrayList<>();
+        user_type = new ArrayList<>();
+        shop_name = new ArrayList<>();
+        isLoggedin = new ArrayList<>();
+        authDataFromDB();
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -119,6 +131,34 @@ public class MainActivity extends AppCompatActivity {
                 prodPrice.add(cursor.getString(4));
                 prodImg.add(cursor.getString(5));  // Retrieving image path as String
             }
+        }
+    }
+
+    void authDataFromDB(){
+        Cursor cursor = authDB.fetchDataFromDB();
+        if(cursor != null && cursor.getCount() > 0){
+            while(cursor.moveToNext()){
+                String id = cursor.getString(0);
+                String usernameValue = cursor.getString(1);
+                String userType = cursor.getString(3);
+                String shopName = cursor.getString(4);
+
+                userID.add(id);
+                username.add(usernameValue);
+                user_type.add(userType);
+                shop_name.add(shopName);
+
+                if(authDB.isLoggedIn(usernameValue) && userType.equals("seller")){
+                    add.setVisibility(View.VISIBLE);
+                }else{
+                    add.setVisibility(View.GONE);
+                }
+            }
+        }else{
+            Toast.makeText(this, "Auth Error", Toast.LENGTH_SHORT).show();
+        }
+        if (cursor != null) {
+            cursor.close();
         }
     }
 }

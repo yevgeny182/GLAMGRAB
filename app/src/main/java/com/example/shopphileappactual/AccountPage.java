@@ -24,7 +24,7 @@ public class AccountPage extends AppCompatActivity {
     private ImageButton account, home, settings;
     private TextView accountTxt, homeTxt, userNameTxt, userTypeTxt;
 
-    ArrayList<String> userID, username, password, user_type, shop_name, isLoggedin;
+    ArrayList<String> userID, username, user_type, shop_name, isLoggedin;
     GlamGrabAuthentication authDB;
 
     Button login, signup;
@@ -142,7 +142,7 @@ public class AccountPage extends AppCompatActivity {
                     signup.setVisibility(View.GONE);
 
                     userNameTxt.setVisibility(View.VISIBLE);
-                    userNameTxt.setText(usernameValue);
+                    userNameTxt.setText(shopName);
 
                     userTypeTxt.setVisibility(View.VISIBLE);
                     userTypeTxt.setText("Seller");

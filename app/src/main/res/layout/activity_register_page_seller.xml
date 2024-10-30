@@ -10,7 +10,7 @@
 
 
     <EditText
-        android:id="@+id/usernameInput3"
+        android:id="@+id/userNameSeller"
         android:layout_width="349dp"
         android:layout_height="43dp"
         android:layout_marginStart="28dp"
@@ -33,40 +33,6 @@
         android:text="Enter a Username:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="824dp"
-        android:background="@drawable/rounded_box_background"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="102dp"
-            android:layout_marginTop="13dp"
-            android:text="Already have an account?"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/signUpText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="268dp"
-            android:layout_marginTop="13dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:text="Login"
-            android:textColor="#006EFF"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="411dp"
@@ -177,7 +143,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/passwordInput2"
+        android:id="@+id/passwordSeller"
         android:layout_width="348dp"
         android:layout_height="43dp"
         android:layout_marginStart="28dp"
@@ -202,7 +168,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/usernameInput2"
+        android:id="@+id/shopName"
         android:layout_width="349dp"
         android:layout_height="43dp"
         android:layout_marginStart="28dp"

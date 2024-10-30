@@ -54,7 +54,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/signUpText"
+            android:id="@+id/loginText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="268dp"
@@ -117,7 +117,6 @@
         android:id="@+id/googleButton2"
         android:layout_width="349dp"
         android:layout_height="51dp"
-
         android:layout_marginStart="24dp"
         android:layout_marginTop="544dp"
         android:background="@drawable/login_button_css"
@@ -125,7 +124,22 @@
         android:paddingStart="20dp"
         android:paddingEnd="40dp"
         android:text="Sign Up With Google"
-        android:textAllCaps="false"
+
+        android:textColor="#666666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signUpAsSeller"
+        android:layout_width="349dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="612dp"
+        android:background="@drawable/login_button_css"
+        android:drawableStart="@drawable/baseline_sell_24"
+        android:paddingStart="20dp"
+        android:paddingEnd="40dp"
+        android:text="Sign Up as Seller"
         android:textColor="#666666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

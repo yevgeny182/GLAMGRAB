@@ -35,6 +35,7 @@ public class AccountSettings extends AppCompatActivity {
                 finish();
             }
         });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
