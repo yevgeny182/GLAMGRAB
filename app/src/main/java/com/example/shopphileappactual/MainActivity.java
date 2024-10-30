@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent toAccountPage = new Intent(MainActivity.this, AccountPage.class);
+
                 startActivity(toAccountPage);
             }
         });

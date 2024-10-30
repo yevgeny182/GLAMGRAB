@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     private Context context;
     private ArrayList prodID, prodName, prodDesc, prodPrice, prodCategory;
     private ArrayList<String> prodImg;
+
     Activity activity;
     int position;
 
@@ -36,6 +38,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         this.prodPrice = prodPrice;
         this.prodCategory = prodCategory;
         this.prodImg = prodImg; // Updated type
+
     }
 
     @NonNull
@@ -78,6 +81,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 intent.putExtra("price", String.valueOf(prodPrice.get(position)));
                 intent.putExtra("category", String.valueOf(prodCategory.get(position)));
                 intent.putExtra("image", prodImg.get(position)); // Pass the image file path as a string
+
                 activity.startActivityForResult(intent, 1);
             }
         });

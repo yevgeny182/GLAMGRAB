@@ -1,5 +1,6 @@
 package com.example.shopphileappactual;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -39,12 +41,30 @@ public class AccountSettings extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              if(LogOutUser()){
-                  Toast.makeText(AccountSettings.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
-                  startActivity(new Intent(AccountSettings.this, MainActivity.class));
-              }else{
-                  Toast.makeText(AccountSettings.this, "Logout failed", Toast.LENGTH_SHORT).show();
-              }
+
+                AlertDialog.Builder alertLogout = new AlertDialog.Builder(AccountSettings.this);
+                alertLogout.setTitle("Logout?");
+                alertLogout.setMessage("Are you sure you want to logout?");
+                alertLogout.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if(LogOutUser()){
+                            Toast.makeText(AccountSettings.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AccountSettings.this, MainActivity.class));
+                            finish();
+                        }else{
+                            Toast.makeText(AccountSettings.this, "Logout failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                alertLogout.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+             alertLogout.show();
             }
         });
 
