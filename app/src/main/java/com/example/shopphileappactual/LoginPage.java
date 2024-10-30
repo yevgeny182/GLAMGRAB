@@ -79,9 +79,9 @@ public class LoginPage extends AppCompatActivity {
                     /* Intent toMainActivity = new Intent(LoginPage.this, MainActivity.class);
                     startActivity(toMainActivity); */
                 }else if(username.isEmpty() || password.isEmpty()){
-                    Snackbar.make(view, "Please enter your username and password to continue.", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, "⚠\uFE0F Please enter your username and password to continue.", Snackbar.LENGTH_SHORT).show();
                 }else{
-                    Snackbar.make(view, "Invalid username or password, please try again.", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, " ⚠\uFE0F Invalid username or password, please try again.", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
