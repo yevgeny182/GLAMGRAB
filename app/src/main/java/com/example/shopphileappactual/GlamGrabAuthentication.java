@@ -1,11 +1,13 @@
 package com.example.shopphileappactual;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -106,6 +108,43 @@ public class GlamGrabAuthentication extends SQLiteOpenHelper {
         }
         return cursor;
     }
+
+    public boolean checkUserName(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE USERNAME=?", new String[]{username});
+        if (cursor.getCount() > 0) {
+            return true;
+        }
+        cursor.close();
+        return false;
+    }
+
+    public void resetPassword(String password, int userID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + PASSWORD + " = ? WHERE " + USER_ID + " = ?";
+        SQLiteStatement statement = db.compileStatement(query);
+
+        statement.bindString(1, password);
+        statement.bindLong(2, userID);
+        statement.executeUpdateDelete();
+        statement.close();
+        db.close();
+    }
+
+    public int getUserID(String username){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT "+ USER_ID + " FROM " + TABLE_NAME + " WHERE " + USERNAME + "=?", new String[]{username});
+        if(cursor != null && cursor.moveToFirst()){
+            @SuppressLint("Range")
+            int userid = cursor.getInt(cursor.getColumnIndex(USER_ID));
+            return userid;
+        }
+        if(cursor != null){
+            cursor.close();
+        }
+        return -1;
+    }
 }
+
 
 

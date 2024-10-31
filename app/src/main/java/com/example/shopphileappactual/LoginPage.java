@@ -74,7 +74,6 @@ public class LoginPage extends AppCompatActivity {
                 String password = pass.getText().toString();
 
                 if(db.checkUser(username, password)){
-                    Toast.makeText(LoginPage.this, "Successful login!", Toast.LENGTH_SHORT).show();
                     db.setLoggedIn(username, true);
                     startActivity(new Intent(LoginPage.this, MainActivity.class));
                     /* Intent toMainActivity = new Intent(LoginPage.this, MainActivity.class);
