@@ -49,7 +49,6 @@ public class AccountSettings extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if(LogOutUser()){
-                            Toast.makeText(AccountSettings.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(AccountSettings.this, MainActivity.class));
                             finish();
                         }else{
