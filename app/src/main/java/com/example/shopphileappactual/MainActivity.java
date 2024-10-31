@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recycler;
-    ImageButton add, account, heart, home;
+    ImageButton add, account, heartButton, home, discover;
     TextView Account, Home;
     MyDataBaseHelper mainDB;
     ArrayList<String> prodID, prodName, prodDesc, prodPrice, prodCategory;
@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
         home.setColorFilter(color, PorterDuff.Mode.SRC_IN);
         Home.setTextColor(Color.parseColor("#FEC63A"));
 
+
+        discover = findViewById(R.id.discoverMainButton);
+        heartButton = findViewById(R.id.heart);
+
+
         //account image button intent to AccountPage.java
         account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(toAccountPage);
             }
         });
+
+
 
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +108,40 @@ public class MainActivity extends AppCompatActivity {
         shop_name = new ArrayList<>();
         isLoggedin = new ArrayList<>();
         authDataFromDB();
+
+
+        discover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor cursor = authDB.fetchDataFromDB();
+                if(cursor!=null && cursor.getCount() > 0){
+                    while(cursor.moveToNext()){
+                        String username = cursor.getString(1);
+                        if(!authDB.isLoggedIn(username)){
+                            startActivity(new Intent(MainActivity.this, LoginPage.class));
+                        }else{
+                            startActivity(new Intent(MainActivity.this, DiscoverPage.class));
+                        }
+                    }
+                }
+            }
+        });
+        heartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor cursor = authDB.fetchDataFromDB();
+                if(cursor!=null && cursor.getCount() > 0){
+                    while(cursor.moveToNext()){
+                        String username = cursor.getString(1);
+                        if(!authDB.isLoggedIn(username)){
+                            startActivity(new Intent(MainActivity.this, LoginPage.class));
+                        }else{
+                            startActivity(new Intent(MainActivity.this, LikesPage.class));
+                        }
+                    }
+                }
+            }
+        });
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -162,4 +203,6 @@ public class MainActivity extends AppCompatActivity {
             cursor.close();
         }
     }
+
+
 }

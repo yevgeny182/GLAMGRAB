@@ -81,7 +81,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 intent.putExtra("price", String.valueOf(prodPrice.get(position)));
                 intent.putExtra("category", String.valueOf(prodCategory.get(position)));
                 intent.putExtra("image", prodImg.get(position)); // Pass the image file path as a string
-
                 activity.startActivityForResult(intent, 1);
             }
         });
