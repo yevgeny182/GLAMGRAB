@@ -22,7 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 
 public class AccountPage extends AppCompatActivity {
-    private ImageButton account, home, settings;
+    private ImageButton account, home, settings, likes, discover;
     private TextView accountTxt, homeTxt, userNameTxt, userTypeTxt;
 
     ArrayList<String> userID, username, user_type, shop_name, isLoggedin;
@@ -55,6 +55,11 @@ public class AccountPage extends AppCompatActivity {
         login = findViewById(R.id.loginButton);
         signup = findViewById(R.id.signUpButton);
 
+        //discover
+        discover = findViewById(R.id.discoverButtonInAccountPage);
+        //likes
+        likes = findViewById(R.id.likesButtonInAccountPage);
+
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,6 +88,14 @@ public class AccountPage extends AppCompatActivity {
             }
         });
 
+        discover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AccountPage.this, DiscoverPage.class));
+            }
+        });
+
+
 
 
         int color = Color.parseColor("#FEC63A");
@@ -100,6 +113,23 @@ public class AccountPage extends AppCompatActivity {
 
 
         displayAuthDataFromDB();
+
+        likes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor cursor = authDB.fetchDataFromDB();
+                if(cursor != null && cursor.getCount() > 0){
+                    String username = cursor.getString(1);
+                    if(!authDB.isLoggedIn(username)){
+                        startActivity(new Intent(AccountPage.this, LoginPage.class));
+                    }else{
+                        startActivity(new Intent(AccountPage.this, LikesPage.class));
+                    }
+
+                }
+            }
+        });
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

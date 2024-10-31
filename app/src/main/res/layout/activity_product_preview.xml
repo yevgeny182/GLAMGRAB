@@ -62,24 +62,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_favorite_border_24_white" />
-
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
     <TextView
         android:id="@+id/prodDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="344dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="348dp"
+        android:ellipsize="end"
         android:text="ProdDescription"
         android:textColor="#000000"
         android:textSize="25sp"
-
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -88,7 +83,7 @@
         android:id="@+id/prodTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="328dp"
         android:text="ProductTitle"
         android:textColor="#9B9588"
