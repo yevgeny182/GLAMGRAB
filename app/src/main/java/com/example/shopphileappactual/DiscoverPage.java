@@ -52,6 +52,13 @@ public class DiscoverPage extends AppCompatActivity {
             }
         });
 
+        account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DiscoverPage.this, AccountPage.class));
+            }
+        });
+
 
 
 

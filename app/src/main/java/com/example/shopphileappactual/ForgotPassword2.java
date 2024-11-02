@@ -13,6 +13,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.snackbar.Snackbar;
+
 public class ForgotPassword2 extends AppCompatActivity {
     Button reset;
     EditText password;
@@ -41,7 +43,7 @@ public class ForgotPassword2 extends AppCompatActivity {
                     startActivity(new Intent(ForgotPassword2.this, LoginPage.class));
                     finish();
                 }else{
-                    Toast.makeText(ForgotPassword2.this, "Please enter a new password", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Please enter a new password", Snackbar.LENGTH_LONG).show();
                 }
             }
         });
