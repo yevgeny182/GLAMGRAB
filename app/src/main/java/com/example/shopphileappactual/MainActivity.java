@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -69,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent toAccountPage = new Intent(MainActivity.this, AccountPage.class);
-
                 startActivity(toAccountPage);
             }
         });
@@ -113,33 +113,63 @@ public class MainActivity extends AppCompatActivity {
         discover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DiscoverPage.class));
+                /*
                 Cursor cursor = authDB.fetchDataFromDB();
-                if(cursor!=null && cursor.getCount() > 0){
-                    while(cursor.moveToNext()){
+                boolean isUserLoggedIn = false;  // Flag to check if any user is logged in
+                if (cursor != null && cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
                         String username = cursor.getString(1);
-                        if(!authDB.isLoggedIn(username)){
-                            startActivity(new Intent(MainActivity.this, LoginPage.class));
-                        }else{
-                            startActivity(new Intent(MainActivity.this, DiscoverPage.class));
+                        if (authDB.isLoggedIn(username)) {
+                            Log.d("DEBUG data",  "Logged in user: " + username);
+                            isUserLoggedIn = true;
+                            break;
                         }
                     }
+
+                    if (isUserLoggedIn) {
+                        Log.d("DEBUG", "User is logged in, redirecting to DiscoverPage.");
+
+                    } else {
+                        Log.d("DEBUG", "User is not logged in, redirecting to LoginPage.");
+                        startActivity(new Intent(MainActivity.this, LoginPage.class));
+                    }
+                } else {
+                    Log.d("DEBUG", "No users in database, redirecting to LoginPage.");
+                    startActivity(new Intent(MainActivity.this, LoginPage.class));
                 }
+
+                if (cursor != null) {
+                    cursor.close();
+                }
+                 */
             }
         });
+
         heartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Cursor cursor = authDB.fetchDataFromDB();
+                boolean isUserLoggedIn = false;
                 if(cursor!=null && cursor.getCount() > 0){
-                    while(cursor.moveToNext()){
+                    while (cursor.moveToNext()) {
                         String username = cursor.getString(1);
-                        if(!authDB.isLoggedIn(username)){
-                            startActivity(new Intent(MainActivity.this, LoginPage.class));
-                        }else{
-                            startActivity(new Intent(MainActivity.this, LikesPage.class));
+                        if (authDB.isLoggedIn(username)) {
+                            Log.d("DEBUG data",  "Logged in user: " + username);
+                            isUserLoggedIn = true;
+                            break;  // Exit loop once a logged-in user is found
                         }
                     }
+                    if (isUserLoggedIn) {
+                        startActivity(new Intent(MainActivity.this, LikesPage.class));
+                    } else {
+                        startActivity(new Intent(MainActivity.this, LoginPage.class));
+                    }//
+                }else{
+                    startActivity(new Intent(MainActivity.this, LoginPage.class));
                 }
+
+
             }
         });
 

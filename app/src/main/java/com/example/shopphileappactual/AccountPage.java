@@ -91,10 +91,29 @@ public class AccountPage extends AppCompatActivity {
         discover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AccountPage.this, DiscoverPage.class));
+                Cursor cursor = authDB.fetchDataFromDB();
+                boolean isLoggedIn = false;
+                if(cursor != null && cursor.getCount() > 0){
+                   while(cursor.moveToNext()){
+                       String username = cursor.getString(1);
+
+                       if(authDB.isLoggedIn(username)){
+                           Log.d("DEBUG data",  "Logged in user: " + username);
+                           isLoggedIn = true;
+                           break;
+                       }
+                   }
+                   if(isLoggedIn){
+                       startActivity(new Intent(AccountPage.this, DiscoverPage.class));
+                   }else{
+                       startActivity(new Intent(AccountPage.this, LoginPage.class));
+                   }
+                }else{
+                    startActivity(new Intent(AccountPage.this, LoginPage.class));
+                }
+                cursor.close();
             }
         });
-
 
 
 
@@ -118,15 +137,26 @@ public class AccountPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Cursor cursor = authDB.fetchDataFromDB();
+                boolean isUserLoggedIn = false;
                 if(cursor != null && cursor.getCount() > 0){
-                    String username = cursor.getString(1);
-                    if(!authDB.isLoggedIn(username)){
-                        startActivity(new Intent(AccountPage.this, LoginPage.class));
-                    }else{
+                    while (cursor.moveToNext()) {
+                        String username = cursor.getString(1);
+                        if (authDB.isLoggedIn(username)) {
+                            Log.d("DEBUG data",  "Logged in user: " + username);
+                            isUserLoggedIn = true;
+                            break;  // Exit loop once a logged-in user is found
+                        }
+                    }
+                    if (isUserLoggedIn) {
                         startActivity(new Intent(AccountPage.this, LikesPage.class));
+                    } else {
+                        startActivity(new Intent(AccountPage.this, LoginPage.class));
                     }
 
+                }else{
+                    startActivity(new Intent(AccountPage.this, LoginPage.class));
                 }
+                cursor.close();
             }
         });
 
