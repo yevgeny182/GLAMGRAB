@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,17 +21,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
 public class ProductPreview extends AppCompatActivity {
 
     ImageButton back;
     TextView prodTitle, prodPrice, prodDesc, prodCategory;
-    ImageView prodImage;
+    ImageView prodImage, like;
     String id, title, price, description, category, image;
     TextView edit;
 
     GlamGrabAuthentication authDB;
+    LikesDatabaseHelper likesDB;
+    MyDataBaseHelper productDB;
 
 
 
@@ -47,6 +52,7 @@ public class ProductPreview extends AppCompatActivity {
         prodPrice = findViewById(R.id.price);
         prodImage = findViewById(R.id.imageMain);
         prodCategory = findViewById(R.id.category);
+        like = findViewById(R.id.imageViewFav);
 
 
         edit = findViewById(R.id.editListing);
@@ -70,12 +76,51 @@ public class ProductPreview extends AppCompatActivity {
             return insets;
         });
 
+        like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor cursor = authDB.fetchDataFromDB();
+                int userID = -1;
+                boolean isUserLoggedIn = false;  // Flag to check if any user is logged in
+                if (cursor != null && cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        String username = cursor.getString(1);
+                        if (authDB.isLoggedIn(username)) {
+                            isUserLoggedIn = true;
+                            userID = cursor.getInt(0);
+                            Log.d("DEBUG", "userID: " + userID);
+                            Log.d("DEBUG","prodID: " + Integer.parseInt(id));
+                            break;
+                        }
+                    }
+
+                    if (isUserLoggedIn && userID != - 1) {
+                      if(!likesDB.isProductLiked(userID, Integer.parseInt(id))){
+                          likesDB.likeProduct(userID, Integer.parseInt(id));
+                          Toast.makeText(ProductPreview.this, "Product added to your likes!", Toast.LENGTH_SHORT).show();
+                      }else{
+                          Snackbar.make(view, "Product already added to your likes!", Snackbar.LENGTH_SHORT).show();
+                      }
+                    }else{
+                        Toast.makeText(ProductPreview.this, "You must login or sign up to like products!", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(ProductPreview.this, LoginPage.class));
+                    }
+                }
+
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+        });
+
 
         getData();
 
 
         authDB = new GlamGrabAuthentication(ProductPreview.this);
         authDataFromDB();
+        likesDB = new LikesDatabaseHelper(ProductPreview.this);
+
     }
 
     @Override
@@ -126,6 +171,7 @@ public class ProductPreview extends AppCompatActivity {
             } else {
                 prodImage.setImageResource(R.drawable.placeholder_image);
             }
+
         } else {
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }
@@ -150,5 +196,7 @@ public class ProductPreview extends AppCompatActivity {
             cursor.close();
         }
     }
+
+
 
 }

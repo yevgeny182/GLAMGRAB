@@ -18,13 +18,15 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     private Context context;
     private static final String DATABASE_NAME = "GlamGrab.db";
     private static final int DATABASE_VERSION = 1;
-    private static final String TABLE_NAME = "GlamGrabDataLibrary";
+    public static final String TABLE_NAME = "GlamGrabDataLibrary";
     private static final String PROD_ID = "_id";
     private static final String PROD_TITLE = "prod_title";
     private static final String PROD_DESC = "prod_desc";
     private static final String PROD_PRICE = "prod_price";
     private static final String PROD_CATEGORY = "prod_category";
     private static final String PROD_IMAGE = "prod_image";
+    private static final String RATING = "rating";
+    private static final String LIKED = "isLiked";
 
 
 
@@ -35,16 +37,18 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String query = "CREATE TABLE " + TABLE_NAME + " (" +
+        String productTable = "CREATE TABLE " + TABLE_NAME + " (" +
                 PROD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 PROD_TITLE + " TEXT, " +
                 PROD_DESC + " TEXT, " +
                 PROD_CATEGORY + " TEXT, " +
                 PROD_PRICE + " TEXT, " +
-                PROD_IMAGE + " TEXT);";
-        sqLiteDatabase.execSQL(query);
-
+                PROD_IMAGE + " TEXT, " +
+                RATING + " TEXT, " +
+                LIKED + " TEXT);";
+        sqLiteDatabase.execSQL(productTable);
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
@@ -73,7 +77,6 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         }else{
             Toast.makeText(context, "Product Added Successfully!", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     Cursor readData(){
