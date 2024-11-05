@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/prodLayoutLikes"
+
+    android:layout_width="173dp"
+    android:layout_height="270dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/prodImageViewLikes"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/productNameLikes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Product Name"
+            android:textSize="14sp"
+            android:gravity="start"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+        <TextView
+            android:id="@+id/productDescriptionLikes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="4dp"
+            android:text="Product Description"
+            android:textSize="12sp"
+            android:gravity="start"
+            android:ellipsize="end"
+            android:maxLines="2" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textViewDollarSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$"
+                android:textColor="#FEC63A"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/productPriceLikes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="99.99"
+                android:textColor="#FEC63A"
+                android:textSize="14sp" />
+            <ImageView
+                android:id="@+id/AddToCartLikes"
+                android:background="?attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="75dp"
+                app:srcCompat="@drawable/shopping_cart_24_brown" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
