@@ -179,15 +179,31 @@ public class ProductPreview extends AppCompatActivity {
 
     void authDataFromDB(){
         Cursor cursor = authDB.fetchDataFromDB();
+        boolean isSeller = false;
         if(cursor != null && cursor.getCount() > 0){
             while(cursor.moveToNext()){
                 String usernameValue = cursor.getString(1);
                 String userType = cursor.getString(3);
-                if(authDB.isLoggedIn(usernameValue) && userType.equals("seller")){
-                    edit.setVisibility(View.VISIBLE);
-                }else{
-                    edit.setVisibility(View.GONE);
+                if(authDB.isLoggedIn(usernameValue)){
+                    switch(userType){
+                        case "customer":
+                            Log.d("DEBUG Data", "Customer " + usernameValue + " is logged in");
+                            break;
+                        case "seller":
+                            isSeller = true;
+                            Log.d("DEBUG Data", "Seller " + usernameValue + " is logged in");
+                            break;
+                        default:
+                            Log.d("DEBUG Data", "problem defaulting in default " + usernameValue + " is logged in");
+                            break;
+                    }
+                    break;
                 }
+            }
+            if(isSeller){
+                edit.setVisibility(View.VISIBLE);
+            }else{
+                edit.setVisibility(View.GONE);
             }
         }else{
             Toast.makeText(this, "Auth Error", Toast.LENGTH_SHORT).show();

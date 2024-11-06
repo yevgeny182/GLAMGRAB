@@ -8,8 +8,11 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,9 +38,7 @@ public class LikesPage extends AppCompatActivity {
     GlamGrabAuthentication authDB;
     MyDataBaseHelper productDB;
     RecyclerView recycler;
-
-
-
+    Spinner categories;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -52,7 +53,7 @@ public class LikesPage extends AppCompatActivity {
         account = findViewById(R.id.accountButtonInLikesPage);
         liketext = findViewById(R.id.likesTextInLikesPage);
         recycler = findViewById(R.id.recyclerViewProductsFromLikes);
-
+        categories = findViewById(R.id.category);
 
 
 
@@ -77,7 +78,6 @@ public class LikesPage extends AppCompatActivity {
         });
 
 
-
         productDB = new MyDataBaseHelper(LikesPage.this);
         likesDB = new LikesDatabaseHelper(LikesPage.this);
         authDB = new GlamGrabAuthentication(LikesPage.this);
@@ -98,7 +98,6 @@ public class LikesPage extends AppCompatActivity {
         int spacing = 32; // Spacing in pixels, adjust this value as needed
         boolean includeEdge = true; // Set to true to include spacing on the edges
         recycler.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
-
         recycler.setAdapter(adapter);
 
 
@@ -136,12 +135,17 @@ public class LikesPage extends AppCompatActivity {
             Log.d("LikesPage", "User not logged in " + userID);
         }
 
-
-
-
         int color = Color.parseColor("#FEC63A");
         likes.setColorFilter(color, PorterDuff.Mode.SRC_IN);
         liketext.setTextColor(Color.parseColor("#FEC63A"));
+
+        if(prodCategory.isEmpty()){
+            Toast.makeText(LikesPage.this, "No categories available.", Toast.LENGTH_SHORT).show();
+        }else{
+            ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, prodCategory);
+            categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            categories.setAdapter(categoryAdapter);
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -164,6 +168,9 @@ public class LikesPage extends AppCompatActivity {
                     String price = cursor.getString(4);
                     String img = cursor.getString(5);
 
+                    if(category == null || category.trim().isEmpty()){
+                        category = "No Category";
+                    }
                     // Convert the ID to a String and add to ArrayLists
                     prodID.add(id);
                     prodName.add(name);
