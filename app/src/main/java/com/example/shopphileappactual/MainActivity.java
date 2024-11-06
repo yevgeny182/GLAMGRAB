@@ -208,27 +208,49 @@ public class MainActivity extends AppCompatActivity {
 
     void authDataFromDB(){
         Cursor cursor = authDB.fetchDataFromDB();
+        boolean isSeller = false;
         if(cursor != null && cursor.getCount() > 0){
             while(cursor.moveToNext()){
                 String id = cursor.getString(0);
                 String usernameValue = cursor.getString(1);
                 String userType = cursor.getString(3);
                 String shopName = cursor.getString(4);
+                String isLoggedUser = cursor.getString(5);
 
                 userID.add(id);
                 username.add(usernameValue);
                 user_type.add(userType);
                 shop_name.add(shopName);
 
-                if(authDB.isLoggedIn(usernameValue) && userType.equals("seller")){
-                    add.setVisibility(View.VISIBLE);
-                }else{
-                    add.setVisibility(View.GONE);
+                if(authDB.isLoggedIn(usernameValue)){
+                    switch(userType){
+                        case "customer":
+                        Log.d("DEBUG Data", "Customer " + usernameValue + " is logged in");
+                            add.setVisibility(View.GONE);
+                        break;
+                        case "seller":
+                        isSeller = true;
+                        Log.d("DEBUG Data", "Seller " + usernameValue + " is logged in");
+                            add.setVisibility(View.VISIBLE);
+                        break;
+                        default:
+                            Log.d("DEBUG Data", "problem defaulting in default " + usernameValue + " is logged in");
+                            add.setVisibility(View.GONE);
+                        break;
+                    }
+                    break;
                 }
+            }
+            if (!isSeller) {
+                add.setVisibility(View.GONE);
+                Log.d("DEBUG Data", "No logged-in user found or user is a customer, hiding add button.");
+            }else{
+                Log.d("DEBUG Data", "im in else block, seller is logged in");
             }
         }else{
             Toast.makeText(this, "Auth Error", Toast.LENGTH_SHORT).show();
         }
+
         if (cursor != null) {
             cursor.close();
         }
