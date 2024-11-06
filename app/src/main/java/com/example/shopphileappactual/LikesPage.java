@@ -90,7 +90,7 @@ public class LikesPage extends AppCompatActivity {
         prodCategory = new ArrayList<>();
         prodImg = new ArrayList<>();
 
-        LikesProductAdapter adapter = new LikesProductAdapter(LikesPage.this, LikesPage.this, prodID, prodName, prodDesc, prodPrice, prodCategory, prodImg);
+        LikesProductAdapter adapter = new LikesProductAdapter(LikesPage.this, LikesPage.this, prodID, prodName, prodDesc, prodPrice, prodCategory, prodImg, likesDB, authDB);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(LikesPage.this, 2);
         recycler.setLayoutManager(gridLayoutManager);
 
@@ -104,21 +104,22 @@ public class LikesPage extends AppCompatActivity {
         //fetch user id
         Cursor cursor = authDB.fetchDataFromDB();
         int userID = -1;
-        boolean isLoggedIn = false;
+        boolean isUserLoggedIn = false;
         if(cursor != null && cursor.getCount() > 0){
             while (cursor.moveToNext()){
                 String username = cursor.getString(1);
                 if (authDB.isLoggedIn(username)) {
-                    userID = cursor.getInt(0);
+                    //userID = cursor.getInt(0);
+                    userID = authDB.getUserID(username);
                     Log.d("DEBUG data",  "Logged in user: " + username);
-                    isLoggedIn = true;
+                    isUserLoggedIn = true;
                     break;
                 }
             }
 
         }
 
-        if(isLoggedIn && userID != - 1){
+        if(isUserLoggedIn && userID != - 1){
             Cursor likesData = likesDB.fetchLikesByUser(String.valueOf(userID));
             if(likesData != null && likesData.getCount() > 0){
                 while(likesData.moveToNext()){

@@ -87,7 +87,7 @@ public class ProductPreview extends AppCompatActivity {
                         String username = cursor.getString(1);
                         if (authDB.isLoggedIn(username)) {
                             isUserLoggedIn = true;
-                            userID = cursor.getInt(0);
+                            userID = authDB.getUserID(username);
                             Log.d("DEBUG", "userID: " + userID);
                             Log.d("DEBUG","prodID: " + Integer.parseInt(id));
                             break;
@@ -98,6 +98,7 @@ public class ProductPreview extends AppCompatActivity {
                       if(!likesDB.isProductLiked(userID, Integer.parseInt(id))){
                           likesDB.likeProduct(userID, Integer.parseInt(id));
                           Toast.makeText(ProductPreview.this, "Product added to your likes!", Toast.LENGTH_SHORT).show();
+                          startActivity(new Intent(ProductPreview.this, LikesPage.class));
                       }else{
                           Snackbar.make(view, "Product already added to your likes!", Snackbar.LENGTH_SHORT).show();
                       }
