@@ -215,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
                 String usernameValue = cursor.getString(1);
                 String userType = cursor.getString(3);
                 String shopName = cursor.getString(4);
-                String isLoggedUser = cursor.getString(5);
 
                 userID.add(id);
                 username.add(usernameValue);

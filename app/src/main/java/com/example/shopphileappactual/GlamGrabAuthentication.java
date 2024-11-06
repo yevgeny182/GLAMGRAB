@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,17 +20,15 @@ public class GlamGrabAuthentication extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_NAME = "AuthDataLibrary";
     private static final String USER_ID = "ID";
-    private static final String USERNAME ="username";
-    private static final String PASSWORD ="password";
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
     private static final String USER_TYPE = "user_type";
     private static final String SHOP_NAME = "shop_name";
     private static final String IS_LOGGED_IN_USER = "isLoggedIn";
     private static final String HOME_ADD = "home_add";
 
 
-
-
-   GlamGrabAuthentication(@Nullable Context context) {
+    GlamGrabAuthentication(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -54,24 +53,25 @@ public class GlamGrabAuthentication extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean registerUser(String username, String password, String usertype, String shopname, String homeAdd){
+    public boolean registerUser(String username, String password, String usertype, String shopname, String homeAdd) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues data = new ContentValues();
         data.put(USERNAME, username);
         data.put(PASSWORD, password);
         data.put(HOME_ADD, homeAdd);
         data.put(IS_LOGGED_IN_USER, 0);
-        if (usertype.equals("seller")){
+        if (usertype.equals("seller")) {
             data.put(USER_TYPE, usertype);
             data.put(SHOP_NAME, shopname);
-        }else{
+        } else {
             data.put(USER_TYPE, usertype);
         }
         long result = db.insert(TABLE_NAME, null, data);
         return result != -1;
     }
-        /* The checkUser method in your code is designed to verify if a user exists in the database with the given username and password.
-         Here’s a step-by-step explanation of what this method does: */
+
+    /* The checkUser method in your code is designed to verify if a user exists in the database with the given username and password.
+     Here’s a step-by-step explanation of what this method does: */
     public boolean checkUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE USERNAME=? AND PASSWORD=?", new String[]{username, password});
@@ -82,7 +82,7 @@ public class GlamGrabAuthentication extends SQLiteOpenHelper {
         return false;
     }
 
-    public void setLoggedIn(String username, boolean login){
+    public void setLoggedIn(String username, boolean login) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues data = new ContentValues();
         data.put(IS_LOGGED_IN_USER, login ? 1 : 0);
@@ -100,11 +100,11 @@ public class GlamGrabAuthentication extends SQLiteOpenHelper {
     }
 
 
-    Cursor fetchDataFromDB(){
+    Cursor fetchDataFromDB() {
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
-        if(db != null){
+        if (db != null) {
             cursor = db.rawQuery(query, null);
         }
         return cursor;
@@ -120,7 +120,7 @@ public class GlamGrabAuthentication extends SQLiteOpenHelper {
         return false;
     }
 
-    public void resetPassword(String password, int userID){
+    public void resetPassword(String password, int userID) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + TABLE_NAME + " SET " + PASSWORD + " = ? WHERE " + USER_ID + " = ?";
         SQLiteStatement statement = db.compileStatement(query);
@@ -132,18 +132,38 @@ public class GlamGrabAuthentication extends SQLiteOpenHelper {
         db.close();
     }
 
-    public int getUserID(String username){
+    public int getUserID(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT "+ USER_ID + " FROM " + TABLE_NAME + " WHERE " + USERNAME + "=?", new String[]{username});
-        if(cursor != null && cursor.moveToFirst()){
+        Cursor cursor = db.rawQuery("SELECT " + USER_ID + " FROM " + TABLE_NAME + " WHERE " + USERNAME + "=?", new String[]{username});
+        if (cursor != null && cursor.moveToFirst()) {
             @SuppressLint("Range")
             int userid = cursor.getInt(cursor.getColumnIndex(USER_ID));
             return userid;
         }
-        if(cursor != null){
+        if (cursor != null) {
             cursor.close();
         }
         return -1;
+    }
+
+    public int getUserIdWithoutParameter(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, new String[]{"ID", "username"},
+                null, null, null, null, null);
+        int userID = -1;
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                String username = cursor.getString(1);
+                if (isLoggedIn(username)) {  // Assuming isLoggedIn checks if this user is logged in
+                    userID = cursor.getInt(0);
+                    Log.d("DEBUG data", "Logged in user: " + username);
+                    break;
+                }
+            }
+
+        }
+        cursor.close();
+        return userID;
     }
 }
 

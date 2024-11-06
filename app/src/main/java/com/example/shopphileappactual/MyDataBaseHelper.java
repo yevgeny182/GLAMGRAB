@@ -1,5 +1,6 @@
 package com.example.shopphileappactual;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,7 +12,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyDataBaseHelper extends SQLiteOpenHelper {
 
@@ -27,7 +33,6 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     private static final String PROD_IMAGE = "prod_image";
     private static final String RATING = "rating";
     private static final String LIKED = "isLiked";
-
 
 
     MyDataBaseHelper(@Nullable Context context) {
@@ -65,6 +70,10 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     void createData(String title, String desc, String category, String price, String image){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues content = new ContentValues();
+//        List<String> imagePaths
+//        JSONArray json = new JSONArray(imagePaths);
+//        String imageJson = json.toString();
+
         content.put(PROD_TITLE, title);
         content.put(PROD_DESC, desc);
         content.put(PROD_CATEGORY, category);
@@ -115,6 +124,28 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         }else{
             Toast.makeText(context, "\uD83E\uDDF9\uD83E\uDEA3 Data deletion successful.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public List<String> getProdImages(int prodID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =
+        db.rawQuery("SELECT " + PROD_IMAGE + " FROM " + TABLE_NAME + " WHERE " + PROD_ID + "=?", new String[]{String.valueOf(prodID)});
+        List <String> imagePath = new ArrayList<>();
+        if(cursor.moveToFirst()){
+            @SuppressLint("Range")
+            String imageJson = cursor.getString(cursor.getColumnIndex(PROD_IMAGE));
+            try{
+                JSONArray json = new JSONArray(imageJson);
+                for (int i = 0; i < json.length(); i++){
+                    imagePath.add(json.getString(i));
+                }
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+        cursor.close();
+        db.close();
+        return imagePath;
     }
 
 }

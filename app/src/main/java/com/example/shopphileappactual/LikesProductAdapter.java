@@ -1,5 +1,7 @@
 package com.example.shopphileappactual;
 
+import static com.example.shopphileappactual.R.*;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -11,9 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,12 +33,15 @@ public class LikesProductAdapter extends RecyclerView.Adapter<LikesProductAdapte
 
     private Activity activity;
     ImageView addToCart;
+    LikesDatabaseHelper likesDBHelper;
+    GlamGrabAuthentication authDBHelper;
+    int userID = -1;
 
     // Constructor
     public LikesProductAdapter(Activity activity, Context context, ArrayList<Integer> prodID,
                                ArrayList<String> prodName, ArrayList<String> prodDesc,
                                ArrayList<String> prodPrice, ArrayList<String> prodCategory,
-                               ArrayList<String> prodImg) {
+                               ArrayList<String> prodImg, LikesDatabaseHelper likesDBHelper, GlamGrabAuthentication authDBHelper) {
         this.context = context;
         this.activity = activity;
         this.prodID = prodID;
@@ -43,6 +50,9 @@ public class LikesProductAdapter extends RecyclerView.Adapter<LikesProductAdapte
         this.prodPrice = prodPrice;
         this.prodCategory = prodCategory;
         this.prodImg = prodImg; // Ensure this is the correct type
+        this.likesDBHelper = likesDBHelper;
+        this.authDBHelper = authDBHelper;
+        this.userID = authDBHelper.getUserIdWithoutParameter();
     }
 
     @NonNull
@@ -52,6 +62,7 @@ public class LikesProductAdapter extends RecyclerView.Adapter<LikesProductAdapte
         View v = inflate.inflate(R.layout.likes_product_layout, parent, false);
         return new MyViewHolderLikes(v);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolderLikes holder, @SuppressLint("RecyclerView") final int position) {
@@ -86,6 +97,40 @@ public class LikesProductAdapter extends RecyclerView.Adapter<LikesProductAdapte
                 activity.startActivityForResult(intent, 1);
             }
         });
+
+        holder.itemView.setOnLongClickListener(view -> {
+            showPopupMenu(view, position);
+            return true;
+        });
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    private void showPopupMenu(View view, int position){
+        PopupMenu popupMenu = new PopupMenu(context, view);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_delete) {
+                int productID = prodID.get(position);
+               new AlertDialog.Builder(context).setTitle("Remove Product")
+                       .setMessage("Remove this product from your likes?")
+                       .setPositiveButton("Yes", (dialog, which) ->{
+                           likesDBHelper.unlikeProduct(userID, productID);
+                           prodID.remove(position);
+                           prodName.remove(position);
+                           prodDesc.remove(position);
+                           prodPrice.remove(position);
+                           prodCategory.remove(position);
+                           prodImg.remove(position);
+                           notifyItemRemoved(position);
+                       })
+                       .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                       .show();
+               return true;
+            }
+            return false;
+        });
+        popupMenu.show();
     }
 
     @Override
