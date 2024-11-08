@@ -10,11 +10,36 @@
 
 
     <EditText
+        android:id="@+id/passwordInputRegisterConfirm"
+        android:layout_width="348dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="360dp"
+        android:background="@drawable/rounded_border"
+        android:drawableStart="@drawable/baseline_lock_outline_24"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:paddingStart="12dp"
+        android:textColorHint="#666666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="340dp"
+        android:text="Confirm Password:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
         android:id="@+id/homeAddress"
         android:layout_width="348dp"
         android:layout_height="43dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="364dp"
+        android:layout_marginTop="436dp"
         android:background="@drawable/rounded_border"
         android:drawableStart="@drawable/outline_home_24"
         android:hint="Home Address"
@@ -29,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="344dp"
+        android:layout_marginTop="416dp"
         android:text="Enter Home Address:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -114,27 +139,11 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/googleButton2"
-        android:layout_width="349dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="544dp"
-        android:background="@drawable/login_button_css"
-        android:drawableStart="@drawable/google_icon"
-        android:paddingStart="20dp"
-        android:paddingEnd="40dp"
-        android:text="Sign Up With Google"
-
-        android:textColor="#666666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signUpAsSeller"
         android:layout_width="349dp"
         android:layout_height="51dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="612dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="688dp"
         android:background="@drawable/login_button_css"
         android:drawableStart="@drawable/baseline_sell_24"
         android:paddingStart="20dp"
@@ -148,8 +157,8 @@
         android:id="@+id/registerButton"
         android:layout_width="349dp"
         android:layout_height="51dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="424dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="500dp"
         android:background="@drawable/shop_now_background"
         android:paddingStart="100dp"
         android:paddingEnd="100dp"
@@ -162,21 +171,9 @@
         android:id="@+id/divider"
         android:layout_width="170dp"
         android:layout_height="1dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="524dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="600dp"
         android:background="#928B7D"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="170dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="524dp"
-        android:layout_marginEnd="16dp"
-        android:background="#928B7D"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.986"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -184,9 +181,37 @@
         android:id="@+id/textView29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="196dp"
-        android:layout_marginTop="516dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="592dp"
         android:text="Or"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/googleButton2"
+        android:layout_width="349dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="620dp"
+        android:background="@drawable/login_button_css"
+        android:drawableStart="@drawable/google_icon"
+        android:paddingStart="20dp"
+        android:paddingEnd="40dp"
+        android:text="Sign Up With Google"
+
+        android:textColor="#666666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="170dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="600dp"
+        android:layout_marginEnd="16dp"
+        android:background="#928B7D"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

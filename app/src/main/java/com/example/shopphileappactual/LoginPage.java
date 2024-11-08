@@ -18,12 +18,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.w3c.dom.Text;
 
@@ -35,6 +40,7 @@ public class LoginPage extends AppCompatActivity {
     GlamGrabAuthentication db;
     Button login, signUpLoginSeller;
     TextView signup;
+    private FirebaseAuth mAuth;
 
     @SuppressLint({"MissingInflatedId"})
     @Override
@@ -59,6 +65,8 @@ public class LoginPage extends AppCompatActivity {
         //signup
         signup = findViewById(R.id.signUpText);
 
+        mAuth = FirebaseAuth.getInstance();
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,16 +81,31 @@ public class LoginPage extends AppCompatActivity {
                 String username = user.getText().toString();
                 String password = pass.getText().toString();
 
+                 /*
                 if(db.checkUser(username, password)){
                     db.setLoggedIn(username, true);
                     startActivity(new Intent(LoginPage.this, MainActivity.class));
-                    /* Intent toMainActivity = new Intent(LoginPage.this, MainActivity.class);
-                    startActivity(toMainActivity); */
+                    Intent toMainActivity = new Intent(LoginPage.this, MainActivity.class);
+                    startActivity(toMainActivity);
                 }else if(username.isEmpty() || password.isEmpty()){
                     Snackbar.make(view, "⚠\uFE0F Please enter your username and password to continue.", Snackbar.LENGTH_SHORT).show();
                 }else{
                     Snackbar.make(view, " ⚠\uFE0F Invalid username or password, please try again.", Snackbar.LENGTH_SHORT).show();
                 }
+                */
+
+                mAuth.signInWithEmailAndPassword(username, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(LoginPage.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(LoginPage.this, MainActivity.class));
+                                }else{
+                                    Snackbar.make(view, " ⚠\uFE0F Invalid username or password, please try again.", Snackbar.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
         //sign up intent
@@ -108,14 +131,11 @@ public class LoginPage extends AppCompatActivity {
         });
 
 
-
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
     }
+
+
+
+
 
 }
 

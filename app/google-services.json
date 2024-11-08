@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "693517370293",
+    "project_id": "loginauthactivityv2",
+    "storage_bucket": "loginauthactivityv2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693517370293:android:aec00d14cf0b35307a8ffc",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnrAiD2xVGdeIt7CkNHv1lf2ELRKWzEEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693517370293:android:fc18fedc43bd36d07a8ffc",
+        "android_client_info": {
+          "package_name": "com.example.shopphileappactual"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnrAiD2xVGdeIt7CkNHv1lf2ELRKWzEEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
