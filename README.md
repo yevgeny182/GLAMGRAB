@@ -8,6 +8,7 @@ GLAMGRAB is an e-commerce mobile application designed for Android devices. It pr
 - **Product Management**: Users can view product details, including images, descriptions, and prices.
 - **Cart Functionality**: Users can add products to their cart and proceed to checkout.
 - **SQLite Database**: Efficient data storage and retrieval for products and user information.
+- **Firebase**: Cloud data storage in case of migration and evolution of app from project to production
 
 ## Requirements
 
