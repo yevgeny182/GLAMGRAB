@@ -92,7 +92,7 @@ public class RegisterPage extends AppCompatActivity {
                 String password = pass.getText().toString();
                 String passwordConfirm = passConfirm.getText().toString();
 
-                //                String username = user.getText().toString();
+                //String username = user.getText().toString();
 //                String password = pass.getText().toString();
 //                String passwordConfirm = passConfirm.getText().toString();
 //                String home = homeAdd.getText().toString();

@@ -14,10 +14,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -27,7 +36,8 @@ public class AccountPage extends AppCompatActivity {
 
     ArrayList<String> userID, username, user_type, shop_name, isLoggedin;
     GlamGrabAuthentication authDB;
-
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore userInfoDB;
     Button login, signup;
 
     @SuppressLint("MissingInflatedId")
@@ -60,6 +70,9 @@ public class AccountPage extends AppCompatActivity {
         //likes
         likes = findViewById(R.id.likesButtonInAccountPage);
 
+        mAuth = FirebaseAuth.getInstance();
+        userInfoDB = FirebaseFirestore.getInstance();
+
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,29 +103,55 @@ public class AccountPage extends AppCompatActivity {
 
         discover.setOnClickListener(new View.OnClickListener() {
             @Override
+//            public void onClick(View view) {
+//                Cursor cursor = authDB.fetchDataFromDB();
+//                boolean isLoggedIn = false;
+//                if(cursor != null && cursor.getCount() > 0){
+//                   while(cursor.moveToNext()){
+//                       String username = cursor.getString(1);
+//
+//                       if(authDB.isLoggedIn(username)){
+//                           Log.d("DEBUG data",  "Logged in user: " + username);
+//                           isLoggedIn = true;
+//                           break;
+//                       }
+//                   }
+//                   if(isLoggedIn){
+//                       startActivity(new Intent(AccountPage.this, DiscoverPage.class));
+//                   }else{
+//                       startActivity(new Intent(AccountPage.this, LoginPage.class));
+//                   }
+//                }else{
+//                    startActivity(new Intent(AccountPage.this, LoginPage.class));
+//                }
+//                cursor.close();
+//            }
             public void onClick(View view) {
-                Cursor cursor = authDB.fetchDataFromDB();
-                boolean isLoggedIn = false;
-                if(cursor != null && cursor.getCount() > 0){
-                   while(cursor.moveToNext()){
-                       String username = cursor.getString(1);
+                //Cursor cursor = authDB.fetchDataFromDB();
+                FirebaseUser currUser = mAuth.getCurrentUser();
+                boolean isUserLoggedIn = currUser != null ? true : false;
+                Log.d("DEBUG", "User logged in? " + isUserLoggedIn);
+                  /*
+                if(cursor != null && cursor.getCount() > 0  ) {
+                    /*while (cursor.moveToNext()) {
+                        String username = cursor.getString(1);
+                        if (authDB.isLoggedIn(username)) {
+                            Log.d("DEBUG data",  "Logged in user: " + username);
+                            isUserLoggedIn = true;
+                            break;
+                        }
+                    }
 
-                       if(authDB.isLoggedIn(username)){
-                           Log.d("DEBUG data",  "Logged in user: " + username);
-                           isLoggedIn = true;
-                           break;
-                       }
-                   }
-                   if(isLoggedIn){
-                       startActivity(new Intent(AccountPage.this, DiscoverPage.class));
-                   }else{
-                       startActivity(new Intent(AccountPage.this, LoginPage.class));
-                   }
-                }else{
+                    */
+
+                if (isUserLoggedIn) {
+                    startActivity(new Intent(AccountPage.this, LikesPage.class));
+                } else {
                     startActivity(new Intent(AccountPage.this, LoginPage.class));
                 }
-                cursor.close();
+
             }
+
         });
 
 
@@ -131,33 +170,38 @@ public class AccountPage extends AppCompatActivity {
         isLoggedin = new ArrayList<>();
 
 
-        displayAuthDataFromDB();
+        //displayAuthDataFromDB();
+        displayAuthDataFromFirebase();
 
         likes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Cursor cursor = authDB.fetchDataFromDB();
-                boolean isUserLoggedIn = false;
-                if(cursor != null && cursor.getCount() > 0){
-                    while (cursor.moveToNext()) {
+                //Cursor cursor = authDB.fetchDataFromDB();
+                FirebaseUser currUser = mAuth.getCurrentUser();
+                boolean isUserLoggedIn = currUser != null ? true : false;
+                Log.d("DEBUG", "User logged in? " + isUserLoggedIn);
+                  /*
+                if(cursor != null && cursor.getCount() > 0  ) {
+                    /*while (cursor.moveToNext()) {
                         String username = cursor.getString(1);
                         if (authDB.isLoggedIn(username)) {
                             Log.d("DEBUG data",  "Logged in user: " + username);
                             isUserLoggedIn = true;
-                            break;  // Exit loop once a logged-in user is found
+                            break;
                         }
                     }
+
+                    */
+
                     if (isUserLoggedIn) {
                         startActivity(new Intent(AccountPage.this, LikesPage.class));
                     } else {
                         startActivity(new Intent(AccountPage.this, LoginPage.class));
                     }
 
-                }else{
-                    startActivity(new Intent(AccountPage.this, LoginPage.class));
                 }
-                cursor.close();
-            }
+                //cursor.close();
+
         });
 
 
@@ -168,6 +212,7 @@ public class AccountPage extends AppCompatActivity {
         });
     }
 
+    /*
     void displayAuthDataFromDB() {
         Cursor cursor = authDB.fetchDataFromDB();
 
@@ -228,4 +273,81 @@ public class AccountPage extends AppCompatActivity {
             cursor.close();
         }
     }
+     */
+
+
+    private void displayAuthDataFromFirebase() {
+        FirebaseUser currUser = mAuth.getCurrentUser();
+
+        if (currUser != null) {
+            String userEmail = currUser.getEmail();
+            String userType = "Non User";
+
+            Log.d("DEBUG data", "Current User ID: " + currUser.getUid());
+            Log.d("DEBUG data", "Current User Email: " + userEmail);
+
+
+            login.setVisibility(View.GONE);
+            signup.setVisibility(View.GONE);
+
+
+            userNameTxt.setVisibility(View.VISIBLE);
+            userNameTxt.setText(userEmail);
+
+            userTypeTxt.setVisibility(View.VISIBLE);
+            userTypeTxt.setText(userType);  // Display the default userType initially
+
+
+            userInfoDB.collection("users")
+                    .whereEqualTo("email", userEmail)  // Match the email from Firebase Authentication
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            if (!queryDocumentSnapshots.isEmpty()) {
+                                // Get all data if match from Array 0
+                                DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
+
+                                String userType = documentSnapshot.getString("userType");
+                                String shopName = documentSnapshot.getString("shopName");
+                                String home = documentSnapshot.getString("home");
+
+                                // Debugging logs to see the values fetched
+                                Log.d("DEBUG data", " userType: " + userType);
+                                Log.d("DEBUG data", " shopName: " + shopName);
+                                Log.d("DEBUG data", " home: " + home);
+
+                                if (userType != null) {
+                                    // Update UI with the fetched data
+                                    userNameTxt.setText(shopName);  // Display shopName (if available)
+                                    userTypeTxt.setText(userType.equals("customer") ? "Customer" : "Seller");  // Display userType
+                                } else {
+                                    userTypeTxt.setText("Customer");
+                                }
+                            } else {
+                                Log.d("DEBUG data", "No user data found in Firestore.");
+                                userTypeTxt.setText("Non User");
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Handle failure to fetch user data
+                            Log.e("DEBUG data", "Error getting user data: " + e.getMessage());
+                            userTypeTxt.setText("Customer");
+                        }
+                    });
+
+        } else {
+            // If the user not logged in
+            login.setVisibility(View.VISIBLE);
+            signup.setVisibility(View.VISIBLE);
+            userNameTxt.setVisibility(View.GONE);
+            userTypeTxt.setVisibility(View.GONE);
+        }
+    }
+
+
+
 }
