@@ -16,10 +16,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class AccountSettings extends AppCompatActivity {
     ImageButton back;
     Button logout;
     GlamGrabAuthentication db;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,8 @@ public class AccountSettings extends AppCompatActivity {
 
         back = findViewById(R.id.imageBack);
         logout = findViewById(R.id.LogoutButton);
+
+        mAuth = FirebaseAuth.getInstance();
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,15 +83,24 @@ public class AccountSettings extends AppCompatActivity {
         });
     }
     boolean LogOutUser(){
-        Cursor cursor = db.fetchDataFromDB();
-        if(cursor!=null && cursor.getCount() > 0){
-           while(cursor.moveToNext()){
-               String username = cursor.getString(1);
-               db.setLoggedIn(username, false);
-           }
-           cursor.close();
-           return true;
-        }
-        return false;
+
+        mAuth.signOut();
+        Toast.makeText(this, "Logout Successful", Toast.LENGTH_SHORT).show();
+        return true;
+
+//        Cursor cursor = db.fetchDataFromDB();
+//        if(cursor!=null && cursor.getCount() > 0){
+//           while(cursor.moveToNext()){
+//               String username = cursor.getString(1);
+//               db.setLoggedIn(username, false);
+//           }
+//           cursor.close();
+//           return true;
+//        }
+//        return false;
+
+
+
     }
+
 }
